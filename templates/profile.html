@@ -1,0 +1,25 @@
+{% extends 'base.html' %} 
+{% block content %} 
+{{ super() }} 
+{% endblock %} 
+
+{% block main %}
+
+<main>
+
+{% for el in data %}
+<article class="Card">
+    <img class="Card_image" src="data:;base64,{{ image3 }}"/>
+  <h3 class="Card_header">{{ el.title }}</h3>
+  <div class="Card_price">
+    <p>{{ el.price }}</p>
+  </div>
+  <button class="Card_btn">Добавить в корзину</button>
+</article>
+{% endfor %}
+
+</main>
+
+
+{% endblock %}
+

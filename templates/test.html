@@ -1,0 +1,21 @@
+{% extends 'base.html' %} 
+{% block content %} 
+{{ super() }} 
+{% endblock %} 
+
+{% block main %}
+
+<main>
+    {% for el in data %}
+    <h2>{{ el.id }}</h2>
+    <img src="{{url_for('image', id=el.id)}}" alt="">
+    <img src="{{url_for('show_image', id=el.id)}}" alt="">
+    <h2>{{ el.title }}</h2>
+    <h2>{{ el.text }}</h2>
+    <h2>{{ el.price }}</h2>
+    {% endfor %}
+
+</main>
+
+
+{% endblock %}

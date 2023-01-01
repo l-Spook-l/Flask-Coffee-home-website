@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coffee Home</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  {% block content %}
+  <body>
+    <header>
+      <nav>
+        <h1 class="Logo"><a href="{{url_for('index')}}">COFFEE HOME</a></h1>
+        <ul class="Menu">
+          <li><a href="{{url_for('add_product')}}">Добавить</a></li>
+          <li><a href="">Про нас</a></li>
+          <li><a href="#menu">Меню</a></li>
+          <li><a href="">Контакти</a></li>
+        </ul>
+      </nav>
+    </header>
+    {% block main %}
+    {% endblock%}
+    <footer><address></address></footer>
+    <!-- <script src="./script/main.js"></script> -->
+  </body>
+  {% endblock %}
+</html>

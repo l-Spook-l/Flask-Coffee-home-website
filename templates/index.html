@@ -1,0 +1,26 @@
+{% extends 'base.html' %} 
+
+{% block title %} Хай {% endblock %}
+
+{% block content %} 
+{{ super() }}
+{% endblock %}
+
+{% block main%}
+<main>
+  <div class="About_us"></div>
+  <div id="menu" class="Product">
+    {% for el in data %}
+    <article class="Card">
+      <img class="Card_image" src="{{url_for('show_image', id=el.id)}}" alt="" />
+      <h3 class="Card_header">{{ el.title }}</h3>
+      <div class="Card_price">
+        <p>{{ el.price }}</p>
+      </div>
+      <button class="Card_btn">Добавить в корзину</button>
+    </article>
+    {% endfor %}
+  </div>
+</main>
+
+{% endblock %}
