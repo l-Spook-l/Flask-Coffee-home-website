@@ -1,20 +1,36 @@
-from flask import Flask, render_template, redirect, url_for, request, Response, make_response
-from werkzeug.utils import secure_filename
-
-from models import Product
+from flask import Flask
+from config import Configuration
+from posts.posts import posts
 from db import db_init, db
+
+
+
+from flask import render_template, redirect, url_for, request, Response, make_response
+from werkzeug.utils import secure_filename
+from models import Product
+# from db import db_init, db
+
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
+app.config.from_object(Configuration)
+app.register_blueprint(posts, url_prefix='/blog')
+
 db_init(app)
 
 
-@app.route("/")
-@app.route("/home")
-def index():
-    product = Product.query.order_by(Product.title).all()
-    return render_template("index.html", data=product)
+# admin = Admin(app)
+# admin.add_view(ModelView())
+
+
+# @app.route("/")
+# @app.route("/home")
+# def index():
+#     product = Product.query.order_by(Product.title).all()
+#     return render_template("index.html", data=product)
 
 
 @app.route("/add-product", methods=["POST", "GET"])
@@ -58,6 +74,10 @@ def show_image(id):
 #     return h
 
 
+# @app.route('info-users')
+# def info-users()
+
+
 @app.route("/profile")
 # @app.route("/profile/<int:id>")
 def profile(id):
@@ -67,7 +87,3 @@ def profile(id):
 @app.route('/test_views')
 def test_views():
     pass
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

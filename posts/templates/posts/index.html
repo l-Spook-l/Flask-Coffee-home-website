@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} <title>Posts</title> {% endblock %}
+
+{% block content %} 
+{{ super() }} 
+{% endblock %} 
+
+{% block main %}
+<main>
+    {% for el in product%}
+    <h1>{{el.title}}</h1>
+    {% endfor %}
+</main>
+{% endblock %}

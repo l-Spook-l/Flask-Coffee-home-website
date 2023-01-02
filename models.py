@@ -14,7 +14,7 @@ class Product(db.Model):
     mimetype = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
-        return '<Product %r>' % self.id
+        return f"<users {self.id}"
 
 
 # class Images(db.Model):
@@ -27,29 +27,25 @@ class Product(db.Model):
 #         return '<Product %r>' % self.id
 
 
-# class Users(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     email = db.Column(db.String(50), unique=True)
-#     password = db.Column(db.String(500), nullable=True)
-#     date = db.Column(db.DateTime, default=datetime.utcnow())
-#
-#     # устанавливаем связь с табл. - profiles по внешнему ключу - user_id
-#     # backref - к какой табл. добавить данные из табл. - profiles
-#     # uselist - одна из записей - users, должна соответствовать одна запись табл. - profiles
-#     pr = db.relationship('Profiles', backref='users', uselist=False)
-#
-#     def __repr__(self):
-#         return f"<users {self.id}"
-#
-#
-# class Profiles(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(50), nullable=True)
-#     old = db.Column(db.Integer)
-#     city = db.Column(db.String(100))
-#
-#     # определет связь этой таблицы с таблицой - users
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-#
-#     def __repr__(self):
-#         return f"<users {self.id}"
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(500), nullable=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow())
+
+    data_profile = db.relationship('Profiles', backref='users', uselist=False)
+
+    def __repr__(self):
+        return f"<users {self.id}"
+
+
+class Profiles(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=True)
+    old = db.Column(db.Integer)
+    city = db.Column(db.String(100))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __repr__(self):
+        return f"<users {self.id}"
