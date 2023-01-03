@@ -8,7 +8,6 @@ from db import db_init, db
 from flask import render_template, redirect, url_for, request, Response, make_response
 from werkzeug.utils import secure_filename
 from models import Product
-# from db import db_init, db
 
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -24,13 +23,6 @@ db_init(app)
 
 # admin = Admin(app)
 # admin.add_view(ModelView())
-
-
-# @app.route("/")
-# @app.route("/home")
-# def index():
-#     product = Product.query.order_by(Product.title).all()
-#     return render_template("index.html", data=product)
 
 
 @app.route("/add-product", methods=["POST", "GET"])

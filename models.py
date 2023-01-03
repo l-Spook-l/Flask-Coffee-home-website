@@ -14,7 +14,7 @@ class Product(db.Model):
     mimetype = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
-        return f"<users {self.id}"
+        return f"<Product {self.id}"
 
 
 # class Images(db.Model):
@@ -36,7 +36,7 @@ class Users(db.Model):
     data_profile = db.relationship('Profiles', backref='users', uselist=False)
 
     def __repr__(self):
-        return f"<users {self.id}"
+        return f"<Users {self.id}"
 
 
 class Profiles(db.Model):
@@ -48,4 +48,14 @@ class Profiles(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
-        return f"<users {self.id}"
+        return f"<Profiles   {self.id}"
+
+
+class Posts(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150), nullable=True)
+    text = db.Column(db.Text)
+    date = db.Column(db.DateTime, default=datetime.utcnow())
+
+    def __repr__(self):
+        return f"<Posts {self.id}"

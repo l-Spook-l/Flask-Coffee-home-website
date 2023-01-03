@@ -8,8 +8,9 @@
 
 {% block main %}
 <main>
-    {% for el in product%}
-    <h1>{{el.title}}</h1>
+    {% for el in posts %}
+    <h2>{{el.title}}</h2>
+    <p>{{el.text}}</p>
     {% endfor %}
 </main>
 {% endblock %}

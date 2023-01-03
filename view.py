@@ -1,6 +1,6 @@
-from app import app
 from flask import render_template
 from models import Product
+from app import app
 
 
 @app.route("/")

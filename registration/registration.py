@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask import request, render_template
+
 from werkzeug.security import generate_password_hash
 
 from app import app
