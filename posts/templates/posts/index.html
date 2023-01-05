@@ -3,10 +3,10 @@
 {% block main %}
 <main>
   {% for el in pages.items %}
-    <a href="{{ url_for('posts.post_detail', slug=el.slug) }}">{{ el.title }}</a>
+    <a href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">{{ el.title }}</a>
     <p>{{ el.text }}</p>
     <p>{{ el.date.date() }}</p>
-    <button><a href="{{ url_for('posts.post_detail', slug=el.slug) }}">Подробнее</a></button><br />
+    <button><a href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">Подробнее</a></button><br />
   {% endfor %}
 
   <ul class="pagination">

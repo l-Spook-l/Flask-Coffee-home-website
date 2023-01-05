@@ -1,19 +1,12 @@
 from flask import Blueprint
 from flask import render_template, request, redirect, url_for
-from db import db
 
+from models import db
 
-from models import Product, Posts
+from models import Posts
 from .forms import PostForm
 
-
-posts = Blueprint('posts', __name__, template_folder='templates', static_folder='static')
-
-# отображение товаров, перенеси
-# @posts.route('/')
-# def index():
-#     product = Product.query.all()
-#     return render_template('posts/index.html', product=product)
+posts = Blueprint('blue_posts', __name__, template_folder='templates', static_folder='static')
 
 
 @posts.route('/')

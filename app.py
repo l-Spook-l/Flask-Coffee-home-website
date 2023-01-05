@@ -1,28 +1,34 @@
 from flask import Flask
 from config import Configuration
 from posts.posts import posts
-from db import db_init, db
 
 
+from flask_migrate import Migrate
 
-from flask import render_template, redirect, url_for, request, Response, make_response
-from werkzeug.utils import secure_filename
-from models import Product
+from models import db
 
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+
+from models import Posts, Product
+
+
+from flask import render_template, redirect, url_for, request, Response
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
 
 app.config.from_object(Configuration)
-app.register_blueprint(posts, url_prefix='/blog')
 
-db_init(app)
+app.register_blueprint(posts, name="blue_posts", url_prefix='/blog')  # имя надо поменять!!!
 
+db.init_app(app)
+migrate = Migrate(app, db)
 
-# admin = Admin(app)
-# admin.add_view(ModelView())
+admin = Admin(app)
+admin.add_view(ModelView(Product, db.session))
+admin.add_view(ModelView(Posts, db.session))
 
 
 @app.route("/add-product", methods=["POST", "GET"])

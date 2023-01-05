@@ -1,5 +1,7 @@
 from app import app
-from db import db
+from models import db
+
+
 import view
 
 
