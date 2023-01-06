@@ -1,10 +1,8 @@
 from flask import Blueprint
 from flask import render_template, request, redirect, url_for
-
-from models import db
-
-from models import Posts
+from models import db, Posts
 from .forms import PostForm
+from flask_security import login_required
 
 posts = Blueprint('blue_posts', __name__, template_folder='templates', static_folder='static')
 
@@ -24,6 +22,7 @@ def index():
 
 
 @posts.route('/create', methods=['POST', 'GET'])
+@login_required
 def create_post():
     if request.method == 'POST':
         title = request.form['title']
@@ -42,13 +41,14 @@ def create_post():
 
 @posts.route('/<slug>')
 def post_detail(slug):
-    post = Posts.query.filter(Posts.slug == slug).first()
+    post = Posts.query.filter(Posts.slug == slug).first_or_404()
     return render_template('posts/post_detail.html', post=post)
 
 
 @posts.route('/<slug>/edit', methods=['POST', 'GET'])
+@login_required
 def edit_post(slug):
-    post = Posts.query.filter(Posts.slug == slug).first()
+    post = Posts.query.filter(Posts.slug == slug).first_or_404()
     if request.method == 'POST':
         form = PostForm(formdata=request.form, obj=post)
         form.populate_obj(post)
