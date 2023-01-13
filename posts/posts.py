@@ -16,7 +16,7 @@ def index():
         page = int(page)
     else:
         page = 1
-    pages = posts.paginate(page=page, per_page=7)
+    pages = posts.paginate(page=page, per_page=5)
 
     return render_template('posts/index.html', posts=posts, pages=pages)
 
@@ -54,7 +54,7 @@ def edit_post(slug):
         form.populate_obj(post)
         db.session.commit()
 
-        return redirect(url_for('posts.post_detail', slug=post.slug))
+        return redirect(url_for('blue_posts.post_detail', slug=post.slug))
     form = PostForm(obj=post)
     return render_template('posts/edit_post.html', post=post, form=form)
 

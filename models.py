@@ -25,7 +25,7 @@ class Product(db.Model):
     mimetype = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
-        return f"<Product {self.id}>"
+        return f"<Product {self.id}, title {self.title}>"
 
 
 # class Images(db.Model):
@@ -55,7 +55,7 @@ class Posts(db.Model):
             return self.slug
 
     def __repr__(self):
-        return f"<Posts {self.id}>"
+        return f"<Posts {self.id} , title {self.title}>"
 
 
 roles_users = db.Table('roles_users',
@@ -68,8 +68,12 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(255), nullable=True)
+    date = db.Column(db.DateTime, default=datetime.now())
     active = db.Column(db.Boolean())
     roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
+
+    def __repr__(self):
+        return f"<User {self.id}>"
 
 
 class Role(db.Model, RoleMixin):
@@ -77,6 +81,8 @@ class Role(db.Model, RoleMixin):
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
 
+    def __repr__(self):
+        return f"<Role {self.name}>"
 
 # class Users(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)

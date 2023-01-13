@@ -21,14 +21,14 @@ app = Flask(__name__)
 
 app.config.from_object(Configuration)
 
-app.register_blueprint(posts, name="blue_posts", url_prefix='/blog')  # имя надо поменять!!!
+app.register_blueprint(posts, name="blue_posts", url_prefix='/blog')  # имя изменено
 
 db.init_app(app)
 migrate = Migrate(app, db)
 
 
-# --------admin-----------
-# перенсти в новый модуль
+# ---------------admin----------------
+# перенести в новый модуль
 class AdminMixin:
     def is_accessible(self):
         return current_user.has_role('admin')
@@ -52,20 +52,19 @@ class HomeAdminView(AdminMixin, AdminIndexView):
 
 
 class PostAdminView(AdminMixin, BaseModelView):
-    form_columns = ['title', 'body', 'tags']
+    form_columns = ['title', 'text']
 
 
-class TagAdminView(AdminMixin, BaseModelView):
-    form_columns = ['name', 'posts']
-
-
-admin = Admin(app)
-admin.add_view(ModelView(Product, db.session))
-admin.add_view(ModelView(Posts, db.session))
-
+admin = Admin(app, 'Shop', url='/', index_view=HomeAdminView())
+admin.add_view(AdminView(Product, db.session))
+admin.add_view(PostAdminView(Posts, db.session))
+admin.add_view(AdminView(User, db.session))
+admin.add_view(AdminView(Role, db.session))
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-app.security = Security(app, user_datastore)
+security = Security(app, user_datastore)
+# app.security = Security(app, user_datastore)
+# --------------------------------------------------------
 
 
 @app.route("/add-product", methods=["POST", "GET"])
@@ -107,10 +106,6 @@ def show_image(id):
 #     h = make_response(file_data.image)
 #     h.headers["Content-Type"] = 'image/png'
 #     return h
-
-
-# @app.route('info-users')
-# def info-users()
 
 
 @app.route("/profile")

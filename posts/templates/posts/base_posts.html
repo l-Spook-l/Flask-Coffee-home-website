@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+    {% endblock %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('.static', filename='css/style.css') }}"
+    />
+  </head>
+  {% block content %}
+  <body>
+    <header>
+      <nav>
+        <h1 class="Logo"><a href="{{url_for('index')}}">COFFEE HOME</a></h1>
+        <ul class="Menu">
+          <li><a href="">Меню</a></li>
+          <li><a href="{{url_for('blue_posts.index')}}">Блог</a></li>
+          <li><a href="">Про нас</a></li>
+          <li><a href="">Контакти</a></li>
+          <li class="admin">
+            {% if current_user.has_role('admin') %}
+              <a href="/admin">Admin</a>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+    </header>
+    {% block main %} {% endblock%}
+    <footer><address></address></footer>
+    <!-- <script src="./script/main.js"></script> -->
+  </body>
+  {% endblock %}
+</html>

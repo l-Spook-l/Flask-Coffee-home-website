@@ -9,15 +9,19 @@
 {% block main%}
 <main>
   <div class="About_us"></div>
+  <h2 class="head-product">Меню</h2>
   <div id="menu" class="Product">
     {% for el in data %}
     <article class="Card">
       <img class="Card_image" src="{{url_for('show_image', id=el.id)}}" alt="" />
       <h3 class="Card_header">{{ el.title }}</h3>
+      <span>
       <div class="Card_price">
-        <p>{{ el.price }}</p>
+        <p>{{ el.price }} ₴</p>
       </div>
       <button class="Card_btn">Добавить в корзину</button>
+      </span>
+
     </article>
     {% endfor %}
   </div>

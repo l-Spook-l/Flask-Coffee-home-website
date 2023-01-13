@@ -50,7 +50,6 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-
 a {
     text-decoration: none;
 }
@@ -72,6 +71,7 @@ nav {
     top: 0;
     max-width: 1920px;
     width: 100%;
+    z-index: 5;
 }
 
 .Logo a {
@@ -80,22 +80,29 @@ nav {
 }
 
 .Menu {
-    /* background-color: brown; */
-    width: 25%;
+    width: 400px;
+    height: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 .Menu a {
-    /* background-color: cadetblue; */
     font-size: 25px;
     color: #fff;
+    padding: 5px 2px;
+    border-radius: 5px;
+    transition: all 300ms ease;
 }
 
 .Menu a:hover {
-    border-radius: 5px;
     color: black;
     background-color: #fff;
+}
+
+.admin {
+    position: absolute; 
+    right: 20px;
 }
 
 main {
@@ -109,6 +116,11 @@ main {
     background-repeat: no-repeat;
 }
 
+.head-product {
+    font-size: 40px;
+    text-align: center;
+}
+
 .Product {
     width: 70%;
     margin: auto;
@@ -120,16 +132,17 @@ main {
 .Card {
     width: 23%;
     /* width: 270px; */
-
     margin: 10px;
     background-color: rgb(53, 10, 10);
     height: 380px;
     border-radius: 10px;
     box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.3);
+    transition: transform 300ms ease;
 }
 
 .Card:hover{
-    background-color: rgb(84, 36, 36);
+    /* background-color: rgb(84, 36, 36); */
+    transform: scale(1.05);
 }
 
 .Card_image {
@@ -144,16 +157,20 @@ main {
     color: #fff;
 }
 
+.Card span {
+    margin-top: 90px;
+    display: flex;
+    justify-content: space-around;
+}
 
 .Card_price {
-    margin-top: 30px;
-    display: flex;
-    font-size: 23px;
+    /* margin-top: 30px; */
+    font-size: 25px;
     color: #fff;
 }
 
 .Card button {
-    margin-top: 30px;
+    /* margin-top: 30px;  */
     width: 180px;
     height: 40px;
     font-size: 15px;
@@ -162,7 +179,10 @@ main {
     background-color: rgb(160, 0, 0);
     border: 5px solid rgb(160, 0, 0);
     border-radius: 10px;
+}
 
+.Card button:hover {
+    cursor: pointer;
 }
 
 footer {
@@ -187,20 +207,6 @@ address {
 }
 
 
-/* ======================================================= */
-.pagination {
-    display: flex;
-    font-size: 22px;
-}
-.pagination li {
-    margin: 10px 5px;
-}
-
-.active a {
-    /* background-color: rgb(188, 167, 151); */
-    color: rgb(137, 78, 30);
-
-}
 /* ======================================================= */
 
 

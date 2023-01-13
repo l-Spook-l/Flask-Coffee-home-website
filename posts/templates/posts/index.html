@@ -1,13 +1,18 @@
-{% extends 'base.html' %} {% block title %} <title>Posts</title> {% endblock %}
+{% extends 'posts/base_posts.html' %} 
+{% block title %} <title>Posts</title> {% endblock %}
 {% block content %} {{ super() }} {% endblock %} 
 {% block main %}
 <main>
-  {% for el in pages.items %}
-    <a href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">{{ el.title }}</a>
-    <p>{{ el.text }}</p>
-    <p>{{ el.date.date() }}</p>
-    <button><a href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">Подробнее</a></button><br />
-  {% endfor %}
+  <section class="list-posts">
+    {% for el in pages.items %}
+    <article class="post">
+      <a href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">{{ el.title }}</a>
+      <p>{{ el.text }}</p>
+      <p>{{ el.date.date() }}</p>
+      <button><a href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">Подробнее</a></button><br />
+    </article>
+    {% endfor %}
+  </section>
 
   <ul class="pagination">
     {% if pages.has_prev %} 
