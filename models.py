@@ -28,16 +28,6 @@ class Product(db.Model):
         return f"<Product {self.id}, title {self.title}>"
 
 
-# class Images(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     image = db.Column(db.LargeBinary, nullable=False)
-#     name_image = db.Column(db.String(100), nullable=False)
-#     mimetype = db.Column(db.Text, nullable=False)
-#
-#     def __repr__(self):
-#         return '<Product %r>' % self.id
-
-
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=True)
@@ -55,7 +45,7 @@ class Posts(db.Model):
             return self.slug
 
     def __repr__(self):
-        return f"<Posts {self.id} , title {self.title}>"
+        return f"<Posts {self.id}, title {self.title}>"
 
 
 roles_users = db.Table('roles_users',
@@ -66,14 +56,15 @@ roles_users = db.Table('roles_users',
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(255), nullable=True)
-    date = db.Column(db.DateTime, default=datetime.now())
     active = db.Column(db.Boolean())
+    date = db.Column(db.DateTime, default=datetime.now())
     roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
 
     def __repr__(self):
-        return f"<User {self.id}>"
+        return f"<User {self.id}, name {self.name}>"
 
 
 class Role(db.Model, RoleMixin):
@@ -106,3 +97,11 @@ class Role(db.Model, RoleMixin):
 #
 #     def __repr__(self):
 #         return f"<Profiles   {self.id}>"
+# class Images(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     image = db.Column(db.LargeBinary, nullable=False)
+#     name_image = db.Column(db.String(100), nullable=False)
+#     mimetype = db.Column(db.Text, nullable=False)
+#
+#     def __repr__(self):
+#         return '<Product %r>' % self.id

@@ -1,5 +1,5 @@
 from flask import render_template
-from models import Product, User
+from models import Product
 from app import app
 
 

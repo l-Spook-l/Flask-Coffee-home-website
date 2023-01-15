@@ -1,40 +1,52 @@
 from flask import Flask
 from config import Configuration
-from posts.posts import posts
-
+# from posts.posts import posts
+# from registration.registration import registration
+from flask_login import LoginManager
 from models import db, Posts, Product, User, Role
-
 from flask_migrate import Migrate
 
 from flask_admin import Admin
 from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 
-from flask_security import SQLAlchemyUserDatastore, Security, current_user
-
+# from flask_security import SQLAlchemyUserDatastore, Security, current_user, forms
+from flask_security import current_user  ###
 
 from flask import render_template, redirect, url_for, request, Response
 from werkzeug.utils import secure_filename
-
 
 app = Flask(__name__)
 
 app.config.from_object(Configuration)
 
-app.register_blueprint(posts, name="blue_posts", url_prefix='/blog')  # имя изменено
+# app.register_blueprint(posts, name="blue_posts", url_prefix='/blog')  # имя изменено
+# app.register_blueprint(registration, url_prefix='/auth')
 
 db.init_app(app)
 migrate = Migrate(app, db)
 
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+#
+#
+# @login_manager.user_loader
+# def load_user(user_id):
+#     print('load user')
+#     return User.get(user_id)
 
-# ---------------admin----------------
+# ============================================
+# -------------------admin--------------------
+# ============================================
+
 # перенести в новый модуль
 class AdminMixin:
     def is_accessible(self):
         return current_user.has_role('admin')
 
     def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('security.login', next=request.url))
+        # return redirect(url_for('security.login', next=request.url))
+        return redirect(url_for('registration.login', next=request.url))
 
 
 class BaseModelView(ModelView):
@@ -61,9 +73,15 @@ admin.add_view(PostAdminView(Posts, db.session))
 admin.add_view(AdminView(User, db.session))
 admin.add_view(AdminView(Role, db.session))
 
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
-# app.security = Security(app, user_datastore)
+
+# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+# security = Security(app, user_datastore)
+# --------------------------------------------------------
+# @app.route("/create_account", methods=["POST", "GET"])
+# def registration():
+#     print(request.form['email'])
+#     print(forms.password_length)
+#     return redirect(url_for('index'))
 # --------------------------------------------------------
 
 
@@ -98,6 +116,7 @@ def add_product():
 def show_image(id):
     file_data = Product.query.filter_by(id=id).first()
     return Response(file_data.image, mimetype=file_data.mimetype)
+
 
 # 2й вариант отображения картинки
 # @app.route('/image/<int:id>')

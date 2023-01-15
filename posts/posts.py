@@ -1,8 +1,10 @@
 from flask import Blueprint
 from flask import render_template, request, redirect, url_for
 from models import db, Posts
+# from flask_security import login_required
+from flask_login import login_required
 from .forms import PostForm
-from flask_security import login_required
+
 
 posts = Blueprint('blue_posts', __name__, template_folder='templates', static_folder='static')
 
@@ -33,7 +35,7 @@ def create_post():
             db.session.commit()
         except:
             print("Что-то пошло не так")
-        return redirect(url_for('posts.index'))
+        return redirect(url_for('blue_posts.index'))
 
     form = PostForm()
     return render_template('posts/create_post.html', form=form)
