@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, render_template
+from flask import Blueprint
 from flask import request, render_template, redirect, url_for, flash
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 # from .forms import LoginForm, RegisterForm
@@ -11,6 +11,8 @@ registration = Blueprint('registration', __name__, template_folder='templates', 
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = 'registration.login'
+login_manager.login_message = 'Авторизуйтесь для доступа'
 
 
 @login_manager.user_loader
@@ -36,6 +38,7 @@ def login():
 
         # if the above check passes, then we know the user has the right credentials
         login_user(user, remember=remember)
+        # return redirect(request.args.get('next'), url_for('registration.profile')) # перенаправление не работает
         return redirect(url_for('registration.profile'))
     return render_template('registration/login.html')
 
@@ -91,19 +94,6 @@ def profile():
 # =================================================================
 # =================================================================
 # =================================================================
-# login_manager = LoginManager()
-# login_manager.init_app(app)
-#
-#
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.get(user_id)
-# # @login_manager.user_loader
-# # def load_user(user_id):
-# #     print('load_user')
-# #     return UserLogin().fromDB(user_id)
-#
-#
 # @registration.route('/register', methods=["POST", "GET"])
 # def register():
 #     if request.method == 'POST':
@@ -155,12 +145,6 @@ def profile():
 # =========================================================================================
 # =========================================================================================
 # =========================================================================================
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#     print('load user')
-#     return User.get(user_id)
-#
 #
 # @registration.route('/login', methods=["POST", "GET"])
 # def login():

@@ -114,6 +114,18 @@ main {
     right: 20px;
 }
 
+.form-login {
+    background-color: burlywood;
+    width: 300px;
+    margin: 150px auto 50px auto;
+}
+
+.form-register {
+    background-color: burlywood;
+    width: 300px;
+    margin: 150px auto 50px auto;
+}
+
 footer {
     background-color: coral;
     height: 500px;
