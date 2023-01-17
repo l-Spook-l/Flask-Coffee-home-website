@@ -21,8 +21,13 @@
           <li><a href="{{url_for('blue_posts.index')}}">Блог</a></li>
           <li><a href="">Про нас</a></li>
           <li><a href="">Контакти</a></li>
-          <li class="admin">
-
+          <li class="user-enter-profile">
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('registration.login')}}">Войти</a>
+            {% endif %} {% if current_user.is_authenticated %}
+            <a href="{{ url_for('registration.profile') }}" class="">Profile</a>
+            <a href="{{ url_for('registration.logout') }}" class="">Выйти</a>
+            {% endif %}
           </li>
         </ul>
       </nav>

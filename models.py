@@ -2,8 +2,8 @@ from datetime import datetime
 from re import sub
 
 from flask_sqlalchemy import SQLAlchemy
-
-from flask_security import UserMixin, RoleMixin
+from flask_login import UserMixin
+from flask_security import RoleMixin
 
 db = SQLAlchemy()
 
@@ -61,19 +61,20 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255), nullable=True)
     active = db.Column(db.Boolean())
     date = db.Column(db.DateTime, default=datetime.now())
-    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
+    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='subquery'))
 
     def __repr__(self):
-        return f"<User {self.id}, name {self.name}>"
+        return f"<User {self.id}>"
 
 
-class Role(db.Model, RoleMixin):
+# class Role(db.Model, RoleMixin):
+class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
 
     def __repr__(self):
-        return f"<Role {self.name}>"
+        return f"<Role {self.id}>"
 
 # class Users(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)

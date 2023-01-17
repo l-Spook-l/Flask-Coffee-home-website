@@ -109,6 +109,10 @@ main {
     margin-top: 80px;
 }
 
+.user-enter-profile {
+    position: absolute; 
+    right: 20px;
+}
 
 footer {
     background-color: coral;

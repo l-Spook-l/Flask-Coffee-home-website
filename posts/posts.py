@@ -1,7 +1,6 @@
 from flask import Blueprint
 from flask import render_template, request, redirect, url_for
 from models import db, Posts
-# from flask_security import login_required
 from flask_login import login_required
 from .forms import PostForm
 
@@ -59,4 +58,3 @@ def edit_post(slug):
         return redirect(url_for('blue_posts.post_detail', slug=post.slug))
     form = PostForm(obj=post)
     return render_template('posts/edit_post.html', post=post, form=form)
-

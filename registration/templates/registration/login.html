@@ -8,6 +8,7 @@
   {% endfor %}
 
   <form action="" method="post" class="form-contact">
+
     <p>
       <label for="">Email: </label><input type="email" name="email" id="" />
     </p>
@@ -20,7 +21,29 @@
       <label for="remainme">Запомнить меня</label>
     </p>
     <button type="submit">Войти</button>
-    <p><a href="{{ url_for('registration.register')}}">Регистрация</a></p>
+    <p><a href="{{ url_for('registration.signup')}}">Регистрация</a></p>
   </form>
 </main>
 {% endblock %}
+
+
+
+
+    <!--     <div class="field">
+      <div class="control">
+          <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
+      </div>
+  </div>
+
+  <div class="field">
+      <div class="control">
+          <input class="input is-large" type="password" name="password" placeholder="Your Password">
+      </div>
+  </div>
+  <div class="field">
+      <label class="checkbox">
+          <input type="checkbox">
+          Remember me
+      </label>
+  </div>
+  <button class="button is-block is-info is-large is-fullwidth">Login</button> -->
