@@ -15,7 +15,7 @@ class LoginForm(FlaskForm):
     password = PasswordField("Пароль: ", validators=[DataRequired(),
                                                      Length(min=4, max=100,
                                                             message="Пароль должен быть от 4 до 100 символов")])
-    remember = BooleanField("Запомнить", default=False)  # запомнить нас или нет
+    remember = BooleanField("Запомнить меня", default=False)  # запомнить нас или нет
     submit = SubmitField("Войти")
 
 
@@ -27,4 +27,4 @@ class RegisterForm(FlaskForm):
                                                             message="Пароль должен быть от 4 до 100 символов")])
     password_2 = PasswordField("Повтор пароля: ",
                                validators=[DataRequired(), EqualTo("password", message="Пароли не совподают")])
-    submit = SubmitField("Регистрация")
+    submit = SubmitField("Зарегистрироваться ")

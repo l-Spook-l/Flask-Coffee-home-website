@@ -1,53 +1,38 @@
-{% extends 'registration/base_registration.html' %} {% block title %}
-<title>registration</title> {% endblock %} {% block content %} {{ super() }} {%
-endblock %} {% block main %}
+{% extends 'registration/base_registration.html' %}
+{% block title %} <title>registration</title> {% endblock %}
+{% block content %}
+ {{ super() }} 
+{% endblock %}
+{% block main %}
 <main>
   <form action="" method="post" class="form-register">
-    {% for cat, msg in get_flashed_messages(True) %}
-    <div class="flash {{cat}}">{{msg}}</div>
-    {% endfor %}
-    <!-- создает тег содержащий скрытый токен для защиты от CSRF-атак -->
-    {{ form.hidden_tag() }}
-    <!-- перебираем все поля через цикл (игнор выделенных полей['csrf_token', 'submit'], остальніе поля в классе) -->
-    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
-    <p>
-      {{ field.label() }}
-      <!-- отображаем имя поля -->
-      {% if field.errors %}
-      <!-- если есть ошибки -->
-      {{ field(class="invalid") }}
-      <!-- отображаем красны фон -->
-      <span class="invalid-feedback">
-        {% for e in field.errors %} 
-        {{e}}
-        <!-- выводим найденные ошибки -->
+    <div class="form">
+      {% for cat, msg in get_flashed_messages(True) %}
+      <div class="flash {{cat}}">{{msg}}</div>
+      {% endfor %}
+      <!-- создает тег содержащий скрытый токен для защиты от CSRF-атак -->
+      {{ form.hidden_tag() }}
+      <!-- перебираем все поля через цикл (игнор выделенных полей['csrf_token', 'submit'], остальніе поля в классе) -->
+      {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+        {{ field.label() }}
+        <!-- отображаем имя поля -->
+        {% if field.errors %}
+        <!-- если есть ошибки -->
+          {{ field(class="invalid") }}
+        <!-- отображаем красны фон -->
+          <span class="invalid-feedback">
+            {% for e in field.errors %} 
+              {{e}}
+            <!-- выводим найденные ошибки -->
+            {% endfor %}
+          </span>
+        {% else %}
+        <!-- если все норм, то все норм -->
+        <p> {{ field(class="aut-input") }} </p>
+        {% endif %} 
         {% endfor %}
-      </span>
-      {% else %}
-      <!-- если все норм, то все норм -->
-      {{ field() }} {% endif %} {% endfor %}
-    </p>
-    <p>{{ form.submit() }}</p>
+      {{ form.submit(class='register-button') }}
+    </div>
   </form>
 </main>
 {% endblock %}
-
-<!-- <div class="field">
-    <div class="control">
-        <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-    </div>
-</div>
-
-<div class="field">
-    <div class="control">
-        <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
-    </div>
-</div>
-
-<div class="field">
-    <div class="control">
-        <input class="input is-large" type="password" name="password" placeholder="Password">
-    </div>
-</div>
-
-<button class="button is-block is-info is-large is-fullwidth">Sign Up</button> -->

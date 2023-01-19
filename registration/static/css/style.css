@@ -100,30 +100,84 @@ nav {
     background-color: #fff;
 }
 
-.admin {
-    position: absolute; 
-    right: 20px;
-}
-
 main {
     margin-top: 80px;
 }
 
 .user-enter-profile {
-    position: absolute; 
+    position: absolute;
     right: 20px;
 }
 
+/* ============================= */
 .form-login {
     background-color: burlywood;
-    width: 300px;
+    width: 500px;
+    height: 300px;
     margin: 150px auto 50px auto;
+    border-radius: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 400px;
+}
+
+.form p {
+    margin: 10px 0;
+}
+
+.form-login label {
+    font-size: 20px;
+}
+
+.aut-input {
+    width: 100%;
+    height: 35px;
+    font-size: 18px;
+}
+
+.remember-and-button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-button {
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 18px;
 }
 
 .form-register {
     background-color: burlywood;
-    width: 300px;
+    width: 500px;
+    height: 400px;
     margin: 150px auto 50px auto;
+    border-radius: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-register label {
+    font-size: 20px;
+}
+
+.register-button {
+    width: 220px;
+    height: 35px;
+    margin: 10px 85px;
+    font-size: 18px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
 }
 
 footer {
@@ -144,6 +198,7 @@ address {
     width: 500px;
     height: 500px;
 }
+
 /* ======================================================= */
 
 /* ======================================================= */

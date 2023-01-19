@@ -11,7 +11,6 @@ from flask_admin.contrib.sqla import ModelView
 
 from flask_login import login_required
 
-
 from flask import render_template, redirect, url_for, request, Response
 # from werkzeug.utils import secure_filename
 
@@ -67,9 +66,10 @@ admin.add_view(PostAdminView(Posts, db.session))
 admin.add_view(AdminView(User, db.session))
 admin.add_view(AdminView(Role, db.session))
 
+
 # ===========================================================
 @app.route("/add-product", methods=["POST", "GET"])
-@login_required
+# @login_required
 def add_product():
     if request.method == "POST":
         title = request.form['title']
@@ -98,10 +98,12 @@ def add_product():
     return render_template("add-product.html")
 
 
-@app.route('/show_image/<int:id>')
-def show_image(id):
-    file_data = Product.query.filter_by(id=id).first()
-    return Response(file_data.image, mimetype=file_data.mimetype)
+# <!-- <img class="Card_image" src="{{url_for('show_image', id=el.id)}}" alt="" /> -->
+# 1й вариант отображения картинки
+# @app.route('/show_image/<int:id>')
+# def show_image(id):
+#     file_data = Product.query.filter_by(id=id).first()
+#     return Response(file_data.image, mimetype=file_data.mimetype)
 
 
 # 2й вариант отображения картинки
@@ -113,12 +115,11 @@ def show_image(id):
 #     return h
 
 
-@app.route("/profile")
-# @app.route("/profile/<int:id>")
-def profile(id):
-    pass
-
-
-@app.route('/test_views')
-def test_views():
-    pass
+# @app.route("/profile")
+# # @app.route("/profile/<int:id>")
+# def profile(id):
+#     pass
+#
+# @app.route('/test_views')
+# def test_views():
+#     pass

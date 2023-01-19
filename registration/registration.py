@@ -35,7 +35,7 @@ def login():
         # if not user or not check_password_hash(user.password, password_form):
         if user and check_password_hash(user.password, password_form):
             login_user(user, remember=remember)
-            # return redirect(request.args.get('next'), url_for('registration.profile')) # перенаправление не работает
+            # return redirect(request.args.get('next'), url_for('registration.profile'))  # перенаправление не работает
             return redirect(url_for('registration.profile'))
 
         flash('Неверная пара логин/пароль')

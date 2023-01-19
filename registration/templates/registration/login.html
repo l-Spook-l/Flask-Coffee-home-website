@@ -1,34 +1,40 @@
-{% extends 'registration/base_registration.html' %} {% block title %}<title>
-  login
-</title>
-{% endblock %} {% block content %} {{ super() }} {%endblock %} {% block main %}
+{% extends 'registration/base_registration.html' %}
+{% block title %} <title>login</title>{% endblock %}
+{% block content %}
+ {{ super() }}
+{%endblock %}
+{% block main %}
 <main>
   <form action="" method="post" class="form-login">
-    {% for cat, msg in get_flashed_messages(True) %}
-    <div class="flash {{cat}}">{{msg}}</div>
-    {% endfor %}
-    <!-- создает тег содержащий скрытый токен для защиты от CSRF-атак -->
-    {{ form.hidden_tag() }}
-    <!-- формируем label --> 
-    {% for field in form if field.name not in ['csrf_token', 'remember', 'submit'] %}
-    <p>{{ field.label() }}
-        {% if field.errors %}
-        {{ field(class="invalid") }}
-        <span class="invalid-feedback">
-            {% for e in field.errors %}
-            {{e}} 
-            {% endfor %}
-        </span>
-        {% else %}
-        {{ field() }}
-        {% endif %}
-        {% endfor %}
-    </p>
-    <!-- поле checkbox -->
-    <p>{{ form.remember.label() }} {{ form.remember }}</p>  
-    <!-- кнопка войти -->
-    <p>{{ form.submit() }}</p>  
-    <p><a href="{{ url_for('registration.signup')}}">Регистрация</a></p>
+    <div class="form">
+      {% for cat, msg in get_flashed_messages(True) %}
+      <div class="flash {{cat}}">{{msg}}</div>
+      {% endfor %}
+      <!-- создает тег содержащий скрытый токен для защиты от CSRF-атак -->
+      {{ form.hidden_tag() }}
+      <!-- формируем label --> 
+      {% for field in form if field.name not in ['csrf_token', 'remember', 'submit'] %}
+      {{ field.label() }}
+      {% if field.errors %}
+          {{ field(class="invalid") }}
+          <span class="invalid-feedback">
+              {% for e in field.errors %}
+              {{e}} 
+              {% endfor %}
+          </span>
+          {% else %}
+          <p> {{ field(class="aut-input") }} </p>
+          {% endif %}
+          {% endfor %}
+      
+      <!-- поле checkbox -->
+      <div class="remember-and-button">
+        <p>{{ form.remember }} {{ form.remember.label() }}</p>  
+        <!-- кнопка войти -->
+        <p>{{ form.submit(class='login-button') }}</p>  
+      </div>
+      <p>Нет аккаунта?<a href="{{ url_for('registration.signup')}}"> Регистрация</a></p>
+    </div>
   </form>
 </main>
 {% endblock %}
