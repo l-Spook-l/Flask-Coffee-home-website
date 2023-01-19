@@ -1,32 +1,28 @@
+# import os
+from os import path
 from flask import Flask
 from config import Configuration
-# from posts.posts import posts
-# from registration.registration import registration
 from flask_login import current_user
 from models import db, Posts, Product, User, Role
 from flask_migrate import Migrate
-
 from flask_admin import Admin
 from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 
-# from flask_security import SQLAlchemyUserDatastore, Security
+from flask_login import login_required
+
 
 from flask import render_template, redirect, url_for, request, Response
-from werkzeug.utils import secure_filename
+# from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
+from uuid import uuid4
+
+app = Flask(__name__, static_url_path='/static')
 
 app.config.from_object(Configuration)
 
-# app.register_blueprint(posts, name="blue_posts", url_prefix='/blog')  # имя изменено
-# app.register_blueprint(registration, url_prefix='/auth')
-
 db.init_app(app)
 migrate = Migrate(app, db)
-
-# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-# security = Security(app, user_datastore)
 
 
 # ============================================
@@ -49,7 +45,7 @@ class AdminMixin:
 
 class BaseModelView(ModelView):
     def on_model_change(self, form, model, is_created):
-        model.generate_slu()
+        model.generate_slug()
         return super(BaseModelView, self).on_model_change(form, model, is_created)
 
 
@@ -73,6 +69,7 @@ admin.add_view(AdminView(Role, db.session))
 
 # ===========================================================
 @app.route("/add-product", methods=["POST", "GET"])
+@login_required
 def add_product():
     if request.method == "POST":
         title = request.form['title']
@@ -81,14 +78,16 @@ def add_product():
         price = request.form['price']
         count = request.form['count']
 
-        file_name = secure_filename(image.filename)
-        mimetype = image.mimetype
+        file_name = f'{uuid4()}.jpg'  # уникальное имя файла
+        # file_name = secure_filename(image.filename)  #  для сохранения в бд
+        image.save(path.join('static/images', file_name))  # для сохранения в папке
+        # mimetype = image.mimetype
 
         try:
-            product = Product(title=title, image=image.read(), text=text, price=price, count=count,
-                              mimetype=mimetype,
-                              name_image=file_name)
-
+            product = Product(title=title, text=text, price=price, count=count, name_image=file_name)
+            # product = Product(title=title, image=image.read(), text=text, price=price, count=count,
+            #                   mimetype=mimetype,
+            #                   name_image=file_name)
             db.session.add(product)
             db.session.flush()
             db.session.commit()

@@ -13,7 +13,8 @@
   <div id="menu" class="Product">
     {% for el in data %}
     <article class="Card">
-      <img class="Card_image" src="{{url_for('show_image', id=el.id)}}" alt="" />
+      <!-- <img class="Card_image" src="{{url_for('show_image', id=el.id)}}" alt="" /> -->
+      <img class="Card_image" src="/static/images/{{ el.name_image }}" alt="" />
       <h3 class="Card_header">{{ el.title }}</h3>
       <span>
       <div class="Card_price">

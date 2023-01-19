@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import request, render_template, redirect, url_for, flash
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
-# from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Role
 from app import app
@@ -22,45 +22,48 @@ def load_user(userid):
 
 @registration.route('/login', methods=["POST", "GET"])
 def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        remember = True if request.form.get('remember') else False
-
+    if current_user.is_authenticated:
+        return redirect(url_for('registration.profile'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password_form = form.password.data
+        remember = True if form.remember.data else False
         user = User.query.filter_by(email=email).first()
-
         # check if the user actually exists
         # take the user-supplied password, hash it, and compare it to the hashed password in the database
-        if not user or not check_password_hash(user.password, password):
-            flash('Please check your login details and try again.')
-            return redirect(
-                url_for('registration.login'))  # if the user doesn't exist or password is wrong, reload the page
+        # if not user or not check_password_hash(user.password, password_form):
+        if user and check_password_hash(user.password, password_form):
+            login_user(user, remember=remember)
+            # return redirect(request.args.get('next'), url_for('registration.profile')) # перенаправление не работает
+            return redirect(url_for('registration.profile'))
 
+        flash('Неверная пара логин/пароль')
+        # if the user doesn't exist or password is wrong, reload the page
         # if the above check passes, then we know the user has the right credentials
-        login_user(user, remember=remember)
-        # return redirect(request.args.get('next'), url_for('registration.profile')) # перенаправление не работает
-        return redirect(url_for('registration.profile'))
-    return render_template('registration/login.html')
+    return render_template('registration/login.html', form=form)
 
 
 @registration.route('/signup', methods=["POST", "GET"])
 def signup():
-    if request.method == 'POST':
-        user = User.query.filter_by(email=request.form['email']).first()
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
         # Здесь надо проверить корректность данных но это тут не будем делать
         if user:  # if a user is found, we want to redirect back to signup page so user can try again
             print(user.name, user.email)
-            flash('Email address already exists')
+            flash('Эта почта уже зарегистрирована')
             return redirect(url_for('registration.signup'))
         try:
             # генерируем хеш пароля
-            hash = generate_password_hash(request.form.get('password'))
+            hash = generate_password_hash(form.password.data)
             # Передаем данные
-            email = request.form.get('email')
-            name = request.form.get('name')
+            email = form.email.data
+            name = form.name.data
             new_user = User(name=name, email=email, password=hash)
             db.session.add(new_user)  # добавляем запись в табл
             db.session.flush()  # из сессии перемещает запись в таблицу
+
             user_for_add_role = User.query.filter_by(email=email).first()
             role = Role.query.filter_by(name='user').first()
             user_for_add_role.roles.append(role)
@@ -69,10 +72,10 @@ def signup():
             flash('Вы успешно зарегистрировались')
             return redirect(url_for('registration.login'))
         except:
-            flash('')
-            return render_template('registration/register.html')
+            flash('хм...')
+            # return render_template('registration/register.html')
 
-    return render_template('registration/register.html')
+    return render_template('registration/register.html', form=form)
 
 
 @registration.route('/logout')
@@ -91,156 +94,6 @@ def profile():
     print(current_user.id)
     print(current_user.roles[0].name)
     return render_template('registration/profile.html', name=current_user.name)
-# =================================================================
-# =================================================================
-# =================================================================
-# @registration.route('/register', methods=["POST", "GET"])
-# def register():
-#     if request.method == 'POST':
-#         # Здесь надо проверить корректность данных но это тут не будем делать
-#         try:
-#             # генерируем хеш пароля
-#             hash = generate_password_hash(request.form['password'])
-#             # Передаем данные
-#             email = request.form['email']
-#             name = request.form['name']
-#             u = User(name=name, email=email, password=hash)
-#             db.session.add(u)  # добавляем запись в табл
-#             db.session.flush()  # из сессии перемещает запись в таблицу
-#             db.session.commit()  # сохраняем изменения табл
-#             flash('Вы успешно зарегистрировались')
-#             return redirect(url_for('registration.login'))
-#         except:
-#             flash('')
-#             return render_template('registration/register.html')
-#
-#     return render_template('registration/register.html')
-#
-# # работает :)
-# @registration.route('/logout')
-# @login_required
-# def logout():
-#     logout_user()
-#     flash('Вы вышли из аккаута')
-#     return redirect(url_for('registration.login'))
-#
-#
-# @registration.route('/login', methods=["POST", "GET"])
-# def login():
-#     if request.method == 'POST':
-#         user = User.query.filter_by(email=request.form['email']).first()
-#         if user and check_password_hash(user.password, request.form['password']):
-#             # user_login = UserLogin().create(user)
-#             # load_user(user_login)
-#             load_user(user)
-#             # flash('Logged in successfully.')
-#             # return redirect(url_for('index'))
-#             return redirect(url_for('registration.profile'))
-#             # return redirect(next or url_for('index'))
-#         flash("Неверный логин или пароль", "error")
-#     return render_template('registration/login.html')
-#
-#
-
-# =========================================================================================
-# =========================================================================================
-# =========================================================================================
-#
-# @registration.route('/login', methods=["POST", "GET"])
-# def login():
-#     if current_user.is_authenticated:
-#         return redirect(url_for('profile'))
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         user = User.query.filter(User.email == form.email.data)
-#         if user and check_password_hash(user.password, form.password.data):
-#             remember_user = form.remember.data
-#             login_user(user, remember=remember_user)
-#             flash('Logged in successfully.')
-#             # return redirect(url_for('index'))
-#             return redirect(next or url_for('index'))
-#         flash("Неверный логин или пароль", "error")
-#     return render_template('registration/login.html', form=form)
-#
-#     # проверяем пришли ли данные
-#     # if request.method == 'POST':
-#     #     # Здесь надо проверить корректность данных но это тут не будем делать
-#     #     try:
-#     #         # генерируем хеш пароля
-#     #         hash = generate_password_hash(request.form['password'])
-#     #         # Передаем данные
-#     #         u = User(email=request.form['email'], password=hash)
-#     #         db.session.add(u)  # добавляем запись в табл
-#     #         db.session.flush()  # из сессии перемещает запись в таблицу
-#     #
-#     #     except:
-#     #         db.session.rollback()  # если что-то полшо не так, откатываем состояние табл.
-#     #         print('Ошибка добавления в БД')
-#     # return render_template("lesson_22_register.html", title="Регистрация")
-#     # # при нажатие - авторизация, если уже авторизированны, переходим в свой профиль
-#     # if current_user.is_authenticated:
-#     #     return redirect(url_for('profile'))
-#     # # создаем экземпляр класса
-#     # form = LoginForm()
-#     # # были ли отправлены данные - POST - запросом, и проверяет введенных корректность данных (в классе -forms)
-#     # if form.validate_on_submit():
-#     #     # обращаемся к БД и берем инфу по почте
-#     #     # user = dbase.getUserByEmail(form.email.data)
-#     #     user = User(email=request.form['email'], password=hash)
-#     #     # если данные получены и пароль введен верно
-#     #     if user and check_password_hash(user['password'], form.password.data):
-#     #         # выполняем авторизацию пользователя
-#     #         user_login = UserLogin().create(user)
-#     #         # для запоминания пользователя
-#     #         rm = form.remember.data
-#     #         # авторизуем пользователя и запонимаем его
-#     #         login_user(user_login, remember=rm)
-#     #         # если  мы перешли на авторизацию с другой страницы, то после входа перейдем на неё иначе в профиль
-#     #         return redirect(request.args.get("next") or url_for('profile'))
-#     #     flash("Неверный логин или пароль", "error")
-#     # form=form ссылка на экземпляр класса
-#     # return render_template("login.html", menu=dbase.getMenu(), title="Авторизация", form=form)
-#
-#     # if request.method == "POST":
-#     #     # обращаемся к БД и берем инфу по почте
-#     #     user = dbase.getUserByEmail(request.form['email'])
-#     #     # если данные получены и пароль введен верно
-#     #     if user and check_password_hash(user['password'], request.form['password']):
-#     #         user_login = UserLogin().create(user)
-#     #         # для запоминания пользователя
-#     #         rm = True if request.form.get('remainme') else False
-#     #         # авторизуем пользователя и запонимаем его
-#     #         login_user(user_login, remember=rm)
-#     #         # если  мы перешли на авторизацию с другой страницы, то после входа перейдем на неё иначе в профиль
-#     #         return redirect(request.args.get("next") or url_for('profile'))
-#     #     flash("Неверный логин или пароль", "error")
-#     # return render_template("login.html", menu=dbase.getMenu(), title="Авторизация")
-#
-#     # return render_template('registration/login.html')
-#
-#
-# @registration.route('/register', methods=["POST", "GET"])
-# def register():
-#     #     # проверяем пришли ли данные
-#     #     if request.method == 'POST':
-#     #         # Здесь надо проверить корректность данных но это тут не будем делать
-#     #         try:
-#     #             # генерируем хеш пароля
-#     #             hash = generate_password_hash(request.form['password'])
-#     #             # Передаем данные
-#     #             u = User(email=request.form['email'], password=hash)
-#     #             db.session.add(u)  # добавляем запись в табл
-#     #             db.session.flush()  # из сессии перемещает запись в таблицу
-#     #
-#     #             # добавление записи в табл - profiles (все имена такие же как и в классе выше
-#     #             # p = Profiles(name=request.form['name'], old=request.form['old'],
-#     #             #              city=request.form['city'], user_id=u.id)
-#     #             # db.session.add(p)  # добавляем запись в табл
-#     #             # db.session.commit()  # сохраняем изменения табл
-#     #         except:
-#     #             db.session.rollback()  # если что-то полшо не так, откатываем состояние табл.
-#     #             print('Ошибка добавления в БД')
-#     return render_template("registration/register.html")
 
 
 # ================================================================================

@@ -3,46 +3,32 @@
 </title>
 {% endblock %} {% block content %} {{ super() }} {%endblock %} {% block main %}
 <main>
-  {% for cat, msg in get_flashed_messages(True) %}
-  <div class="flash {{cat}}">{{msg}}</div>
-  {% endfor %}
-
   <form action="" method="post" class="form-login">
-    <p>
-      <label for="">Email: </label><input type="email" name="email" id="" />
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}">{{msg}}</div>
+    {% endfor %}
+    <!-- создает тег содержащий скрытый токен для защиты от CSRF-атак -->
+    {{ form.hidden_tag() }}
+    <!-- формируем label --> 
+    {% for field in form if field.name not in ['csrf_token', 'remember', 'submit'] %}
+    <p>{{ field.label() }}
+        {% if field.errors %}
+        {{ field(class="invalid") }}
+        <span class="invalid-feedback">
+            {% for e in field.errors %}
+            {{e}} 
+            {% endfor %}
+        </span>
+        {% else %}
+        {{ field() }}
+        {% endif %}
+        {% endfor %}
     </p>
-    <p>
-      <label for="">Пароль: </label
-      ><input type="password" name="password" id="" />
-    </p>
-    <p>
-      <input type="checkbox" name="remainme" id="remainme" />
-      <label for="remainme">Запомнить меня</label>
-    </p>
-    <button type="submit">Войти</button>
+    <!-- поле checkbox -->
+    <p>{{ form.remember.label() }} {{ form.remember }}</p>  
+    <!-- кнопка войти -->
+    <p>{{ form.submit() }}</p>  
     <p><a href="{{ url_for('registration.signup')}}">Регистрация</a></p>
   </form>
 </main>
 {% endblock %}
-
-
-
-
-    <!--     <div class="field">
-      <div class="control">
-          <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
-      </div>
-  </div>
-
-  <div class="field">
-      <div class="control">
-          <input class="input is-large" type="password" name="password" placeholder="Your Password">
-      </div>
-  </div>
-  <div class="field">
-      <label class="checkbox">
-          <input type="checkbox">
-          Remember me
-      </label>
-  </div>
-  <button class="button is-block is-info is-large is-fullwidth">Login</button> -->

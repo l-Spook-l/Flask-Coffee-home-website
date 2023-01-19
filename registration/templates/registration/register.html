@@ -1,38 +1,53 @@
-{% extends 'registration/base_registration.html' %} 
-{% block title %} <title>registration</title> {% endblock %}
-{% block content %} {{ super() }} {% endblock %} 
-{% block main %}
+{% extends 'registration/base_registration.html' %} {% block title %}
+<title>registration</title> {% endblock %} {% block content %} {{ super() }} {%
+endblock %} {% block main %}
 <main>
+  <form action="" method="post" class="form-register">
     {% for cat, msg in get_flashed_messages(True) %}
     <div class="flash {{cat}}">{{msg}}</div>
     {% endfor %}
-    <form action="" method="post" class="form-register">
-        <div class="field">
-            <div class="control">
-                <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-            </div>
-        </div>
-
-        <div class="field">
-            <div class="control">
-                <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
-            </div>
-        </div>
-
-        <div class="field">
-            <div class="control">
-                <input class="input is-large" type="password" name="password" placeholder="Password">
-            </div>
-        </div>
-
-        <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
-
-    </form>
+    <!-- создает тег содержащий скрытый токен для защиты от CSRF-атак -->
+    {{ form.hidden_tag() }}
+    <!-- перебираем все поля через цикл (игнор выделенных полей['csrf_token', 'submit'], остальніе поля в классе) -->
+    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+    <p>
+      {{ field.label() }}
+      <!-- отображаем имя поля -->
+      {% if field.errors %}
+      <!-- если есть ошибки -->
+      {{ field(class="invalid") }}
+      <!-- отображаем красны фон -->
+      <span class="invalid-feedback">
+        {% for e in field.errors %} 
+        {{e}}
+        <!-- выводим найденные ошибки -->
+        {% endfor %}
+      </span>
+      {% else %}
+      <!-- если все норм, то все норм -->
+      {{ field() }} {% endif %} {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+  </form>
 </main>
 {% endblock %}
-<!--         <p><label for="">Имя: </label><input type="name" name="name" id=""></p>
-        <p><label for="">Email: </label><input type="email" name="email" id=""></p>
-        <p><label for="">Пароль: </label><input type="password" name="password" id=""></p>
-        <p><label for="">Повтор пароля: </label><input type="password" name="password_2" id=""></p>
-        <p><input type="submit" name="" id="" value="Регистрация"></p>
-        <p><a href="{{ url_for('registration.login')}}">Я уже зарегистрирован</a></p> -->
+
+<!-- <div class="field">
+    <div class="control">
+        <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+        <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+        <input class="input is-large" type="password" name="password" placeholder="Password">
+    </div>
+</div>
+
+<button class="button is-block is-info is-large is-fullwidth">Sign Up</button> -->
