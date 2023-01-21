@@ -1,15 +1,17 @@
-{% extends 'base.html' %} 
+{% extends 'posts/base_posts.html' %} 
 {% block title %} <title>Добавление поста</title> {% endblock %} 
 {% block content %} {{ super() }} {% endblock %} 
 {% block main %}
 <main>
   <form
-    class="form-for-add-product"
+    class="form-create-post"
     action="{{ url_for('blue_posts.create_post')}}"
     method="post">
-    <p>{{ form.title.label() }} {{ form.title }}</p>
-    <p>{{ form.text.label() }} {{ form.text }}</p>
-    <button type="submit">Создать</button>
+    <div class="form">
+      <p>{{ form.title.label() }} {{ form.title }}</p>
+      <p>{{ form.text.label() }} {{ form.text }}</p>
+      <button type="submit">Создать</button>
+    </div>
   </form>
 </main>
 

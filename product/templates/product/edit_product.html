@@ -1,0 +1,22 @@
+{% extends 'product/base_product.html' %}
+
+{% block title %} <title>Изменение товара</title> {% endblock %}
+
+{% block content %}
+{{ super() }}
+{% endblock %}
+
+{% block main %}
+<main>
+  <form class="form-edit-product" action="" method="post">
+    <div class="form">
+      <p>{{ form.title.label() }} {{ form.title(class="") }}</p>
+      <p>{{ form.price.label() }} {{ form.price }}</p>
+      <p>{{ form.count.label() }} {{ form.count }}</p>
+      <p>{{ form.text.label() }} {{ form.text }}</p>
+      <p>{{ form.image.label() }} {{ form.image }}</p>
+      <button type="submit">Изменение</button>
+    </div>
+  </form>
+</main>
+{% endblock %}

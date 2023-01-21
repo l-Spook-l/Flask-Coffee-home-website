@@ -1,15 +1,11 @@
 from flask import Blueprint
-from flask import request, render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from .forms import LoginForm, RegisterForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, User, Role, Product
+from models import db, User, Role
 from app import app
-# ===============
-from models import Product
-from uuid import uuid4
-from os import path
-# ===============
+
 
 registration = Blueprint('registration', __name__, template_folder='templates', static_folder='static')
 
@@ -89,36 +85,6 @@ def logout():
     flash('Вы вышли из аккаута')
     return redirect(url_for('registration.login'))
 
-
-# @app.route("/add-product", methods=["POST", "GET"])
-# # @login_required
-# def add_product():
-#     if request.method == "POST":
-#         title = request.form['title']
-#         image = request.files['image']
-#         text = request.form['description']
-#         price = request.form['price']
-#         count = request.form['count']
-#
-#         file_name = f'{uuid4()}.jpg'  # уникальное имя файла
-#         # file_name = secure_filename(image.filename)  #  для сохранения в бд
-#         image.save(path.join('static/images', file_name))  # для сохранения в папке
-#         # mimetype = image.mimetype
-#
-#         try:
-#             product = Product(title=title, text=text, price=price, count=count, name_image=file_name)
-#             # product = Product(title=title, image=image.read(), text=text, price=price, count=count,
-#             #                   mimetype=mimetype,
-#             #                   name_image=file_name)
-#             db.session.add(product)
-#             db.session.flush()
-#             db.session.commit()
-#             return redirect("/")
-#         except:
-#             db.session.rollback()
-#             print("Ошибка добавления в БД")
-#     return render_template("add-product.html")
-#
 
 # ================================================================================
 # ================================================================================

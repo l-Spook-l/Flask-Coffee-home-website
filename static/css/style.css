@@ -42,7 +42,6 @@ img {
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
-
 }
 
 /* Для Firefox */
@@ -109,10 +108,9 @@ main {
     margin-top: 80px;
 }
 
-.About_us {
+.About-us {
     height: 1080px;
     background-image: url('../images/room.jpg');
-
     background-repeat: no-repeat;
 }
 
@@ -141,17 +139,16 @@ main {
 }
 
 .Card:hover {
-    /* background-color: rgb(84, 36, 36); */
     transform: scale(1.05);
 }
 
-.Card_image {
+.Card-image {
     width: 100%;
     height: 200px;
     border-radius: 10px;
 }
 
-.Card_header {
+.Card-header {
     font-size: 28px;
     text-align: center;
     color: #fff;
@@ -163,18 +160,15 @@ main {
     justify-content: space-around;
 }
 
-.Card_price {
-    /* margin-top: 30px; */
+.Card-price {
     font-size: 25px;
     color: #fff;
 }
 
 .Card button {
-    /* margin-top: 30px;  */
     width: 180px;
     height: 40px;
     font-size: 15px;
-
     color: #fff;
     background-color: rgb(160, 0, 0);
     border: 5px solid rgb(160, 0, 0);
@@ -184,60 +178,59 @@ main {
 .Card button:hover {
     cursor: pointer;
 }
-.add-product-btn {
-    margin: 10px;
-    width: 180px;
-    height: 55px;
+
+.btn-add {
+    margin: 20px;
+}
+
+.add-btn {
+    padding: 12px;
+    font-size: 18px;
     border: 0;
     border-radius: 8px;
-    background-color: rgb(255, 255, 255);
-}
-.add-product-btn a {
-    background-color:rgb(163, 119, 23);
-    font-size: 20px;
-    padding: 10px;
     color: black;
-    border-radius: 8px;
+    background-color: rgb(41, 181, 46);
 }
 
 .view-product {
-    background-color: aqua;
+    margin: 8px;
+    background-color: rgb(220, 232, 232);
     display: flex;
     flex-flow: wrap;
-    /* justify-content: space-around; */
+    border-radius: 8px;
 }
 
 .view-card {
     width: 280px;
-    height: 350px;
+    height: 390px;
     margin: 10px;
     background-color: bisque;
     border-radius: 8px;
+}
+
+.view-card p {
+    margin: 10px 0;
 }
 
 .view-card-image {
     width: 100%;
     height: 200px;
     border-radius: 10px;
-    margin-bottom: 10px;
 }
 
-.view-card-header {
-    margin-bottom: 20px;
+.btn-change {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
 }
 
-.view-card_price {
-    background-color: aquamarine;
-    margin-bottom: 20px;
-}
-
-.view-card_btn {
+.change-btn {
     padding: 8px;
     border: 0;
     border-radius: 8px;
     background-color: aqua;
+    color: black;
 }
-
 
 footer {
     background-color: coral;
@@ -245,18 +238,11 @@ footer {
     display: flex;
 }
 
-
 address {
     background-color: rgb(23, 142, 77);
     width: 100%;
     height: 300px;
     margin-top: 10px;
-}
-
-.form-for-add-product {
-    background-color: aqua;
-    width: 500px;
-    height: 500px;
 }
 
 

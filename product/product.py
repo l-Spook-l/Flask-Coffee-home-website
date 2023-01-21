@@ -3,6 +3,7 @@ from flask_login import login_required
 from uuid import uuid4
 from os import path
 from models import db, Product
+from .forms import ProductForm
 
 
 product = Blueprint('p', __name__, template_folder='templates', static_folder='static')
@@ -14,7 +15,7 @@ def add_product():
     if request.method == "POST":
         title = request.form['title']
         image = request.files['image']
-        text = request.form['description']
+        text = request.form['text']
         price = request.form['price']
         count = request.form['count']
 
@@ -35,4 +36,30 @@ def add_product():
         except:
             db.session.rollback()
             print("Ошибка добавления в БД")
-    return render_template("product/add-product.html")
+    form = ProductForm()
+    return render_template("product/add-product.html", form=form)
+
+
+@product.route('/<title>/edit', methods=['POST', 'GET'])
+@login_required
+def edit_product(title):
+    product_edit = Product.query.filter(Product.title == title).first_or_404()
+    if request.method == 'POST':
+        form = ProductForm(formdata=request.form, obj=product_edit)
+        form.populate_obj(product_edit)
+        db.session.commit()
+        return redirect(url_for('profile'))
+    form = ProductForm(obj=product_edit)
+    return render_template('product/edit_product.html', product=product_edit, form=form)
+
+
+@product.route('/<title>/delete ')
+@login_required
+def delete_product(title):
+    product_delete = Product.query.filter(Product.title == title).first_or_404()
+    try:
+        db.session.delete(product_delete)
+        db.session.commit()
+        return redirect(url_for('profile'))
+    except:
+        return "Error database"

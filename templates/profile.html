@@ -9,21 +9,22 @@
       </p>
         <p>Почта: {{ email }}</p>
     </h1>
-    <button class="add-product-btn">
-      <a href="{{url_for('p.add_product')}}">Добавить товар</a>
-    </button>
+    <div class="btn-add">
+      <a class="add-btn" href="{{url_for('p.add_product')}}">Добавить товар</a>
+      <a class="add-btn" href="{{url_for('blue_posts.create_post')}}">Добавить Пост</a>
+    </div>
     <div id="menu" class="view-product">
       {% for el in data %}
       <article class="view-card">
         <img class="view-card-image" src="/static/images/{{ el.name_image }}" alt="" />
-        <h3 class="view-card-header">Название товара: {{ el.title }}</h3>
-        <div class="view-card_price">
-          <p>Цена товара: {{ el.price }} ₴</p>
-        </div>
-        <!-- <button class="Card_btn">Изменить</button> -->
-        <button>
-          <a class="view-card_btn" href="{{url_for('p.add_product')}}">Изменить</a>
-        </button>
+        <p class="view-card-header">Название товара: {{ el.title }}</p>
+          <p class="view-card-price">Цена товара: {{ el.price }} ₴</p>
+          <p class="view-card-count">Количество товара: {{ el.count }}</p>
+          <p class="view-card-text">Описание товара: {{ el.text }}</p>
+          <div class="btn-change">
+            <a class="change-btn" href="{{ url_for('p.edit_product', title=el.title) }}">Изменить</a><br />
+            <a class="change-btn" href="{{ url_for('p.delete_product', title=el.title) }}">Удалить</a><br />
+          </div>
       </article>
       {% endfor %}
     </div>

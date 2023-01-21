@@ -58,3 +58,15 @@ def edit_post(slug):
         return redirect(url_for('blue_posts.post_detail', slug=post.slug))
     form = PostForm(obj=post)
     return render_template('posts/edit_post.html', post=post, form=form)
+
+
+@posts.route('/<slug>/delete ')
+@login_required
+def delete_post(slug):
+    post_delete = Posts.query.filter(Posts.slug == slug).first_or_404()
+    try:
+        db.session.delete(post_delete)
+        db.session.commit()
+        return redirect(url_for('blue_posts.index'))
+    except:
+        return "Error database"

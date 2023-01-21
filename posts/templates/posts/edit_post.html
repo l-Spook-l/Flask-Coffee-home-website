@@ -1,15 +1,17 @@
-{% extends 'base.html' %} 
+{% extends 'posts/base_posts.html' %} 
 {% block title %} <title>Изменение поста</title> {% endblock %} 
 {% block content %} {{ super() }} {% endblock %} 
 {% block main %}
 <main>
   <form
-    class="form-for-add-product"
+    class="form-edit-post"
     action="{{ url_for('blue_posts.edit_post', slug=post.slug)}}"
     method="post">
-    <p>{{ form.title.label() }} {{ form.title }}</p>
-    <p>{{ form.text.label() }} {{ form.text }}</p>
-    <button type="submit">Изменение</button>
+    <div class="form">
+      <p>{{ form.title.label() }} {{ form.title }}</p>
+      <p>{{ form.text.label() }} {{ form.text }}</p>
+      <button type="submit">Изменение</button>
+    </div>
   </form>
 </main>
 
