@@ -1,10 +1,12 @@
-{% extends 'base.html' %} 
+{% extends 'posts/base_posts.html' %} 
 {% block title %} <title>{{ post.title }}</title> {% endblock %}
 {% block content %} {{ super() }} {% endblock %} 
 {% block main %}
 <main>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.text }}</p>
-    <p>Дата: {{ post.date }}</p>
+    <div class="post-detail">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text }}</p>
+        <p>Дата: {{ post.date }}</p>
+    </div>
 </main>
 {% endblock %}

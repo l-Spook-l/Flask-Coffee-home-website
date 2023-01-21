@@ -6,10 +6,10 @@
   <section class="list-posts">
     {% for el in pages.items %}
     <article class="post">
-      <a href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">{{ el.title }}</a>
-      <p>{{ el.text }}</p>
-      <p>{{ el.date.date() }}</p>
-      <button><a href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">Подробнее</a></button><br />
+      <a class="post-title" href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">{{ el.title }}</a>
+      <p class="post-data">{{ el.date.date() }}</p>
+      <p class="posr-text">{{ el.text[:250] }}...</p>
+      <a class="post-button" href="{{ url_for('blue_posts.post_detail', slug=el.slug) }}">Подробнее</a><br />
     </article>
     {% endfor %}
   </section>

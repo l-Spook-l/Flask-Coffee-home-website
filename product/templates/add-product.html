@@ -1,0 +1,34 @@
+{% extends 'base_product.html' %} 
+{% block title %} <title>Добавление товара</title> {% endblock %}
+
+{% block content %} 
+{{ super() }} 
+{% endblock %} 
+{% block main %}
+<main>
+  <form class="form-for-add-product" method="post" enctype="multipart/form-data"> 
+    <div>
+      <label for="title">Название товара</label>
+      <input id="title" type="text" name="title" placeholder="Введите название товара" />
+    </div>
+    <div>
+      <label for="image">Фотография товара</label>
+      <input id="image" type="file" name="image" placeholder="Загрузите фотографию товара" />
+    </div>
+    <div>
+      <label for="description">Описание товара</label>
+      <input id="description" type="text" name="description" placeholder="Описание товара" />
+    </div>
+    <div>
+      <label for="price">Цена товара</label>
+      <input id="price" type="number" name="price" placeholder="Цена товара" />
+    </div>
+    <div>
+      <label for="count">Количество товара</label>
+      <input id="count" type="number" name="count" placeholder="Количество товара" />
+    </div>
+    <button type="submit">Добавить товар</button>
+  </form>
+</main>
+
+{% endblock %}

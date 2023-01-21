@@ -1,5 +1,3 @@
-# import os
-from os import path
 from flask import Flask
 from config import Configuration
 from flask_login import current_user
@@ -9,12 +7,9 @@ from flask_admin import Admin
 from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 
-from flask_login import login_required
 
 from flask import render_template, redirect, url_for, request, Response
-# from werkzeug.utils import secure_filename
 
-from uuid import uuid4
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -67,37 +62,6 @@ admin.add_view(AdminView(User, db.session))
 admin.add_view(AdminView(Role, db.session))
 
 
-# ===========================================================
-@app.route("/add-product", methods=["POST", "GET"])
-# @login_required
-def add_product():
-    if request.method == "POST":
-        title = request.form['title']
-        image = request.files['image']
-        text = request.form['description']
-        price = request.form['price']
-        count = request.form['count']
-
-        file_name = f'{uuid4()}.jpg'  # уникальное имя файла
-        # file_name = secure_filename(image.filename)  #  для сохранения в бд
-        image.save(path.join('static/images', file_name))  # для сохранения в папке
-        # mimetype = image.mimetype
-
-        try:
-            product = Product(title=title, text=text, price=price, count=count, name_image=file_name)
-            # product = Product(title=title, image=image.read(), text=text, price=price, count=count,
-            #                   mimetype=mimetype,
-            #                   name_image=file_name)
-            db.session.add(product)
-            db.session.flush()
-            db.session.commit()
-            return redirect("/")
-        except:
-            db.session.rollback()
-            print("Ошибка добавления в БД")
-    return render_template("add-product.html")
-
-
 # <!-- <img class="Card_image" src="{{url_for('show_image', id=el.id)}}" alt="" /> -->
 # 1й вариант отображения картинки
 # @app.route('/show_image/<int:id>')
@@ -113,13 +77,3 @@ def add_product():
 #     h = make_response(file_data.image)
 #     h.headers["Content-Type"] = 'image/png'
 #     return h
-
-
-# @app.route("/profile")
-# # @app.route("/profile/<int:id>")
-# def profile(id):
-#     pass
-#
-# @app.route('/test_views')
-# def test_views():
-#     pass
