@@ -17,21 +17,22 @@
         {{ field.label() }}
         <!-- отображаем имя поля -->
         {% if field.errors %}
-        <!-- если есть ошибки -->
-          {{ field(class="invalid") }}
+        <!-- если есть ошибки (к полю ниже можно поменять класс- invalid)-->
+          {{ field(class="aut-input") }}
         <!-- отображаем красны фон -->
-          <span class="invalid-feedback">
+          <p class="invalid-feedback">
             {% for e in field.errors %} 
               {{e}}
             <!-- выводим найденные ошибки -->
             {% endfor %}
-          </span>
+          </p>
         {% else %}
         <!-- если все норм, то все норм -->
         <p> {{ field(class="aut-input") }} </p>
         {% endif %} 
         {% endfor %}
       {{ form.submit(class='register-button') }}
+      <p>Есть аккаунт?<a href="{{ url_for('registration.login')}}"> Войдите!</a></p>
     </div>
   </form>
 </main>

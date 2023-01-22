@@ -80,7 +80,7 @@ nav {
 }
 
 .Menu {
-    width: 400px;
+    width: 300px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -107,6 +107,7 @@ nav {
 
 main {
     margin-top: 80px;
+    margin-bottom: 150px;
 }
 
 .list-posts {
@@ -145,8 +146,34 @@ main {
 }
 
 .post-detail {
-    margin: auto;
+    margin: 120px auto 30px;
     width: 1300px;
+    border-radius: 18px;
+    background-color:burlywood;
+}
+
+.post-detail h1 {
+    text-align: center;
+}
+
+.post-detail p {
+    width: 90%;
+    margin: 20px auto;
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+.btn-change-or-delete {
+    margin-left: 20px;
+    height: 38px;
+}
+
+.post-detail a {
+    padding: 8px;
+    font-size: 18px;
+    border-radius: 8px;
+    color: black;
+    background-color:chocolate;
 }
 
 .pagination {
@@ -227,17 +254,90 @@ textarea {
     background-color: chocolate;
 }
 
+/* ============================================== */
 footer {
-    background-color: coral;
-    height: 500px;
-    display: flex;
+    position: absolute;
+    width: 100%;    
+    background-color: rgb(28, 21, 6);
 }
 
-address {
-    background-color: rgb(23, 142, 77);
+.social {
     width: 100%;
-    height: 300px;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social__icon {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+    background-color: #f2f2f2;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px #00000080;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.social__icon i {
+    font-size: 26px;
+    color: #67798e;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.social__icon:after {
+    content: "";
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    transform: translate(0, 70px);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social__icon.instagram:after {
+    background-color: #833AB4;
+}
+
+.social__icon.facebook:after {
+    background-color: #3b5998;
+}
+
+.social__icon.git:after {
+    background-color: #333;
+}
+
+.social__icon.twitter:after {
+    background-color: #00acee;
+}
+
+.social__icon.linkedin:after {
+    background-color: #0e76a8;
+}
+
+.social__icon:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 0px 15px #00000080;
+}
+
+.social__icon:hover i {
+    color: #fff;
+}
+
+.social__icon:hover:after {
+    transform: translate(0);
+}
+
+footer p {
+    margin: 20px;
+    text-align: center;
+    color: #fff;
 }
 
 /* ======================================================= */

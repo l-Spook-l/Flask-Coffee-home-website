@@ -9,6 +9,12 @@
       rel="stylesheet"
       href="{{ url_for('.static', filename='css/style.css') }}"
     />
+    <link
+    rel="stylesheet"
+    href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+    crossorigin="anonymous"
+  />
   </head>
   {% block content %}
   <body>
@@ -16,10 +22,9 @@
       <nav>
         <h1 class="Logo"><a href="{{url_for('index')}}">COFFEE HOME</a></h1>
         <ul class="Menu">
-          <li><a href="">Меню</a></li>
           <li><a href="{{url_for('blue_posts.index')}}">Блог</a></li>
-          <li><a href="">Про нас</a></li>
-          <li><a href="">Контакти</a></li>
+          <li><a href="#about-us-and-contact">Про нас</a></li>
+          <li><a href="#about-us-and-contact">Контакти</a></li>
           <li class="user-enter-profile">
             {% if not current_user.is_authenticated %}
             <a href="{{ url_for('registration.login')}}">Войти</a>
@@ -32,7 +37,26 @@
       </nav>
     </header>
     {% block main %} {% endblock%}
-    <footer><address></address></footer>
+    <footer id="about-us-and-contact">
+      <div class="social">
+        <a class="social__icon instagram" href="#">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a class="social__icon facebook" href="#">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a class="social__icon git" href="https://github.com/l-Spook-l" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+        <a class="social__icon twitter" href="#">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a class="social__icon linkedin" href="#">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+      <p>&copy;COFFEE HOME 2023 All rights reserved</p>
+    </footer>
   </body>
   {% endblock %}
 </html>

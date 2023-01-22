@@ -7,10 +7,12 @@
         <h1>{{ post.title }}</h1>
         <p>{{ post.text }}</p>
         <p>Дата: {{ post.date }}</p>
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('blue_posts.edit_post', slug=post.slug) }}" class="">Редактировать</a>
-        <a href="{{ url_for('blue_posts.delete_post', slug=post.slug) }}" class="">Удалить</a>
-        {% endif %}
+        <div class="btn-change-or-delete">
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('blue_posts.edit_post', slug=post.slug) }}" class="">Редактировать</a>
+            <a href="{{ url_for('blue_posts.delete_post', slug=post.slug) }}" class="">Удалить</a>
+            {% endif %}
+        </div>
     </div>
 </main>
 {% endblock %}

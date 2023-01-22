@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect, render_template, url_for
 from flask_login import login_required
 from uuid import uuid4
-from os import path
+from os import path, remove
 from models import db, Product
 from .forms import ProductForm
 
@@ -58,6 +58,7 @@ def edit_product(title):
 def delete_product(title):
     product_delete = Product.query.filter(Product.title == title).first_or_404()
     try:
+        remove(f'static/images/{product_delete.name_image}')
         db.session.delete(product_delete)
         db.session.commit()
         return redirect(url_for('profile'))

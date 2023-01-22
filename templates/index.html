@@ -8,7 +8,19 @@
 
 {% block main%}
 <main>
-  <div class="About-us"></div>
+  <div class="About-us">
+    <div class="About-us-block">
+      <h1>Лучшее кофе в Киеве</h1>
+      <div class="address-working-hours">
+        <p>улица Крещатик 1</p>
+        <ul>
+          <li>Пн - Пт:	с 10:00 до 20:00</li>
+          <li>Сб - Вс:	с 10:00 до 20:00</li>
+        </ul>
+    </div>
+    <a href="#menu">Перейти в католог</a>
+    </div>
+  </div>
   <h2 class="head-product">Меню</h2>
   <div id="menu" class="Product">
     {% for el in data %}

@@ -59,7 +59,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(50), nullable=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(255), nullable=True)
-    active = db.Column(db.Boolean())
+    # active = db.Column(db.Boolean())
     date = db.Column(db.DateTime, default=datetime.now())
     roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='subquery'))
 

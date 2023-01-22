@@ -79,7 +79,7 @@ nav {
 }
 
 .Menu {
-    width: 400px;
+    width: 300px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -112,6 +112,41 @@ main {
     height: 1080px;
     background-image: url('../images/room.jpg');
     background-repeat: no-repeat;
+}
+
+.About-us-block {
+    position: absolute;
+    margin: 220px 250px;
+    width: 350px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0.85;
+    border-radius: 18px;
+    background-color: burlywood;
+}
+
+.About-us-block h1 {
+    font-size: 35px;
+    text-align: center;
+}
+
+.address-working-hours {
+    margin: 20px 0 20px 15px;
+    font-size: 20px;
+}
+
+.address-working-hours ul li {
+    margin: 20px 0;
+}
+
+.About-us-block a {
+    padding: 20px;
+    margin-left: 15px;
+    width: 170px;
+    color: black;
+    border-radius: 8px;
+    background-color:chocolate;
 }
 
 .head-product {
@@ -189,7 +224,7 @@ main {
     border: 0;
     border-radius: 8px;
     color: black;
-    background-color: rgb(41, 181, 46);
+    background-color: rgb(213, 141, 89);
 }
 
 .view-product {
@@ -228,26 +263,98 @@ main {
     padding: 8px;
     border: 0;
     border-radius: 8px;
-    background-color: aqua;
+    background-color: rgb(210, 135, 82);
     color: black;
 }
 
+/* ============================================== */
 footer {
-    background-color: coral;
-    height: 500px;
+    margin-top: 120px;
     display: flex;
+    flex-direction: column;
+    background-color: rgb(28, 21, 6);
 }
 
-address {
-    background-color: rgb(23, 142, 77);
+.social {
     width: 100%;
-    height: 300px;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.social__icon {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+    background-color: #f2f2f2;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px #00000080;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.social__icon i {
+    font-size: 26px;
+    color: #67798e;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.social__icon:after {
+    content: "";
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    transform: translate(0, 70px);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social__icon.instagram:after {
+    background-color: #833AB4;
+}
+
+.social__icon.facebook:after {
+    background-color: #3b5998;
+}
+
+.social__icon.git:after {
+    background-color: #333;
+}
+
+.social__icon.twitter:after {
+    background-color: #00acee;
+}
+
+.social__icon.linkedin:after {
+    background-color: #0e76a8;
+}
+
+.social__icon:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 0px 15px #00000080;
+}
+
+.social__icon:hover i {
+    color: #fff;
+}
+
+.social__icon:hover:after {
+    transform: translate(0);
+}
+
+footer p {
+    margin: 20px;
+    text-align: center;
+    color: #fff;
+}
 
 /* ======================================================= */
-
 
 @media screen and (max-width: 1200px) {
     .Card {
