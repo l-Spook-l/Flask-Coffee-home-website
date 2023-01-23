@@ -64,3 +64,20 @@ def delete_product(title):
         return redirect(url_for('profile'))
     except:
         return "Error database"
+
+
+# <!-- <img class="Card_image" src="{{url_for('show_image', id=el.id)}}" alt="" /> -->
+# 1й вариант отображения картинки
+# @app.route('/show_image/<int:id>')
+# def show_image(id):
+#     file_data = Product.query.filter_by(id=id).first()
+#     return Response(file_data.image, mimetype=file_data.mimetype)
+
+
+# 2й вариант отображения картинки
+# @app.route('/image/<int:id>')
+# def image(id):
+#     file_data = Product.query.filter_by(id=id).first()
+#     h = make_response(file_data.image)
+#     h.headers["Content-Type"] = 'image/png'
+#     return h

@@ -2,6 +2,8 @@ from flask import render_template
 from models import Product
 from app import app
 from flask_login import login_required, current_user
+from datetime import datetime
+
 
 
 @app.route("/")
@@ -18,6 +20,7 @@ def profile():
     print(current_user.email)
     print(current_user.id)
     print(current_user.roles[0].name)
+    print(datetime.now())
     product = Product.query.order_by(Product.id).all()
     return render_template('profile.html', name=current_user.name, email=current_user.email, data=product)
 
