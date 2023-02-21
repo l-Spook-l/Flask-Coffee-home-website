@@ -26,14 +26,10 @@ migrate = Migrate(app, db)
 class AdminMixin:
     def is_accessible(self):
         if current_user.is_authenticated:
-            print(current_user.id, ' - id текущего пользователя')
-            # print(Role.query.filter_by(name='admin').first().id, ' - id нужной роли')
             return current_user.roles[0].name == 'admin'
 
     def inaccessible_callback(self, name, **kwargs):
-        # return redirect(url_for('security.login', next=request.url))  # для переадрисации
         return redirect(url_for('index'))
-        # return redirect(url_for('page_not_found'))
 
 
 class BaseModelView(ModelView):

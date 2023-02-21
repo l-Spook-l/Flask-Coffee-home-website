@@ -18,17 +18,11 @@ def add_product():
         text = request.form['text']
         price = request.form['price']
         count = request.form['count']
-
         file_name = f'{uuid4()}.jpg'  # уникальное имя файла
-        # file_name = secure_filename(image.filename)  #  для сохранения в бд
         image.save(path.join('static/images', file_name))  # для сохранения в папке
-        # mimetype = image.mimetype
 
         try:
             product = Product(title=title, text=text, price=price, count=count, name_image=file_name)
-            # product = Product(title=title, image=image.read(), text=text, price=price, count=count,
-            #                   mimetype=mimetype,
-            #                   name_image=file_name)
             db.session.add(product)
             db.session.flush()
             db.session.commit()
@@ -64,20 +58,3 @@ def delete_product(title):
         return redirect(url_for('profile'))
     except:
         return "Error database"
-
-
-# <!-- <img class="Card_image" src="{{url_for('show_image', id=el.id)}}" alt="" /> -->
-# 1й вариант отображения картинки
-# @app.route('/show_image/<int:id>')
-# def show_image(id):
-#     file_data = Product.query.filter_by(id=id).first()
-#     return Response(file_data.image, mimetype=file_data.mimetype)
-
-
-# 2й вариант отображения картинки
-# @app.route('/image/<int:id>')
-# def image(id):
-#     file_data = Product.query.filter_by(id=id).first()
-#     h = make_response(file_data.image)
-#     h.headers["Content-Type"] = 'image/png'
-#     return h

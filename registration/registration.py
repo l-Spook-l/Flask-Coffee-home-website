@@ -34,7 +34,6 @@ def login():
         # берем предоставленный пользователем пароль, хешируем его и сравниваем с хешированным паролем в базе данных
         if user and check_password_hash(user.password, password_form):
             login_user(user, remember=remember)
-            # return redirect(request.args.get('next'), url_for('registration.profile'))  # перенаправление не работает
             return redirect(url_for('profile'))
         flash('Неверная пара логин/пароль')
         # если пользователь не существует или пароль неверный, перезагружаем страницу
@@ -69,8 +68,7 @@ def signup():
             flash('Вы успешно зарегистрировались')
             return redirect(url_for('registration.login'))
         except:
-            flash('хм...')
-            # return render_template('registration/register.html')
+            flash('Ошибка БД')
 
     return render_template('registration/register.html', form=form)
 
@@ -81,49 +79,3 @@ def logout():
     logout_user()
     flash('Вы вышли из аккаута')
     return redirect(url_for('registration.login'))
-
-
-# ================================================================================
-# ================================================================================
-# ================================================================================
-
-
-# ========= для security ============
-# from app import app, user_datastore
-# from flask import render_template
-# from models import db, Role
-# with app.app_context():
-#     user_datastore.create_user(email="my7_email@me.com", password="password")
-#     db.session.commit()
-# with app.app_context():
-#     user_datastore.create_role(name='admin', description='administrator')
-#     db.session.commit()
-# with app.app_context():
-#     user = User.query.filter(User.email == 'uaspookua@gmail.com')
-#     role = Role.query.filter(Role.name == 'admin')
-#     user_datastore.add_role_to_user(user, role)
-#     db.session.commit()
-
-
-# ================================================================================
-# ================================================================================
-# ================================================================================
-# создание роли
-# with app.app_context():
-#     name = 'user'
-#     description = 'user'
-#     role = Role(name=name, description=description)
-#     db.session.add(role)  # добавляем запись в табл
-#     db.session.flush()  # из сессии перемещает запись в таблицу
-#     db.session.commit()  # сохраняем изменения табл
-# ================================================================================
-# ================================================================================
-# ================================================================================
-# with app.app_context():
-#     user = User.query.filter_by(email='uaspookua@gmail.com').first()
-#     role = Role.query.filter_by(name='admin').first()
-#     # user = User()
-#     # role = Role()
-#     user.roles.append(role)
-#     db.session.add(user)
-#     db.session.commit()
