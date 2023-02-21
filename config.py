@@ -12,6 +12,3 @@ class Configuration(object):
 
     # SECURITY_REGISTERABLE = True
     # SECURITY_REGISTER_URL = '/create_account'
-
-
-
