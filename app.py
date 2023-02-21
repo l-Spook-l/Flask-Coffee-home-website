@@ -8,7 +8,7 @@ from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 
 
-from flask import render_template, redirect, url_for, request, Response
+from flask import redirect, url_for
 
 
 app = Flask(__name__, static_url_path='/static')
@@ -23,7 +23,6 @@ migrate = Migrate(app, db)
 # -------------------admin--------------------
 # ============================================
 
-# перенести в новый модуль
 class AdminMixin:
     def is_accessible(self):
         if current_user.is_authenticated:
